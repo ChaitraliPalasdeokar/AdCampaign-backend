@@ -19,15 +19,20 @@ export default class AdCampaignService{
         const utilFunctions = new UtilFunctions();
         const data= this.getAllData();
         const queryParams= Object.keys(allQueryParams);
-        let finalData;
+        let finalData: { [index: string]: any }=data;
         queryParams.forEach((query)=>{
            if(query=='groupby'){
-               const fields = allQueryParams['groupby'];
-               console.log('fields',fields);
-             if(fields.length>0){
-                 finalData = utilFunctions.groupDataBy(data,fields);
-                 return finalData;
+               const groupParam = allQueryParams['groupby'];
+               console.log('fields',groupParam);
+             if(groupParam.length>0){
+                 finalData = utilFunctions.groupDataBy(finalData,groupParam);
              }
+           }
+           if(query=='aggregate'){
+               const aggregateParam = allQueryParams['aggregate']
+               if(aggregateParam.length>0){
+                   finalData = utilFunctions.aggregateDataBy(finalData,aggregateParam);
+               }
            }
         });
         return finalData;
