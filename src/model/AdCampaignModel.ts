@@ -12,7 +12,7 @@ export default class AdCampaignModel {
 
     readonly spends: number;
 
-    readonly partition_id: number;
+    readonly partition_id: string;
 
     readonly optimisation_target: string;
 
@@ -25,7 +25,7 @@ export default class AdCampaignModel {
         this.attributed_revenue=Number(attributed_revenue);
         this.type = type;
         this.spends=Number(spends);
-        this.partition_id =Number(partition_id);
+        this.partition_id =partition_id;
         this.optimisation_target = optimisation_target;
     }
 }

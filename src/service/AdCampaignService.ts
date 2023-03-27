@@ -15,7 +15,7 @@ export default class AdCampaignService{
         return allData;
     }
 
-    getDataFor(allQueryParams) {
+    getDataFor(allQueryParams:{[index:string]:any}) {
         const utilFunctions = new UtilFunctions();
         const data= this.getAllData();
         const queryParams= Object.keys(allQueryParams);
@@ -25,7 +25,7 @@ export default class AdCampaignService{
                const fields = allQueryParams['groupby'];
                console.log('fields',fields);
              if(fields.length>0){
-                 finalData = utilFunctions.groupBy(data,fields);
+                 finalData = utilFunctions.groupDataBy(data,fields);
                  return finalData;
              }
            }
