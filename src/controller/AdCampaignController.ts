@@ -22,7 +22,7 @@ export default class AdCampaignController{
         } catch (error) {
             console.log(error);
             res.status(400);
-            res.json('Error')
+            res.json(error.message);
         }
     }
 
