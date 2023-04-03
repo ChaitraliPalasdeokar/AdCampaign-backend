@@ -2,9 +2,6 @@ import express from "express";
 import AdCampaignService from "../service/AdCampaignService";
 
 export default class AdCampaignController{
-    constructor(
-    ) {
-    }
 
      getData(req: express.Request, res: express.Response){
          const service = new AdCampaignService();
@@ -17,12 +14,13 @@ export default class AdCampaignController{
              else{
                  response = service.getAllData();
              }
-            console.log('started');
             res.json(response);
-        } catch (error) {
+        } catch (error:unknown) {
             console.log(error);
             res.status(400);
-            res.json(error.message);
+            if(error instanceof Error)
+                res.json(error.message);
+            res.json('Error');
         }
     }
 

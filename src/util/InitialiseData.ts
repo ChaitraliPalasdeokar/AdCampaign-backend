@@ -1,5 +1,5 @@
 import fs from "fs";
-let csvToJson = require('convert-csv-to-json');
+const csvToJson = require('convert-csv-to-json');
 
 const csvFile = 'sphere-sample-data.csv';
 const outputFile = 'sphere-sample-data.json';

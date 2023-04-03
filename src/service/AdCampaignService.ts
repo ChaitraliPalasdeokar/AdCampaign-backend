@@ -4,8 +4,6 @@ import AdCampaignModel from "../model/AdCampaignModel";
 
 export default class AdCampaignService{
 
-    constructor() {
-    }
     getAllData():AdCampaignModel[] {
         const allData: AdCampaignModel[] =[];
         data.forEach((row)=>{
@@ -19,19 +17,18 @@ export default class AdCampaignService{
         const utilFunctions = new UtilFunctions();
         const data:AdCampaignModel[]= this.getAllData();
         const queryParams:string[]= Object.keys(allQueryParams);
-        let finalData: { [index: string]: any }=data;
+        let response: { [index: string]: any }=data;
         queryParams.forEach((query)=>{
             if(query=='fields'){
-                console.log('in fields')
                 const fieldsParam = allQueryParams['fields']
                 if(fieldsParam.length>0){
-                    finalData = utilFunctions.filterFields(finalData,fieldsParam)
+                    response = utilFunctions.filterFields(response,fieldsParam)
                 }
             }
            if(query=='groupby'){
                const groupParam = allQueryParams['groupby'];
              if(groupParam.length>0){
-                 finalData = utilFunctions.groupDataBy(finalData,groupParam);
+                 response = utilFunctions.groupDataBy(response,groupParam);
              }
            }
            if(query=='aggregate'){
@@ -40,11 +37,10 @@ export default class AdCampaignService{
                }
                const aggregateParam = allQueryParams['aggregate']
                if(aggregateParam.length>0){
-                   finalData = utilFunctions.aggregateDataBy(finalData,aggregateParam);
+                   response = utilFunctions.aggregateDataBy(response,aggregateParam);
                }
            }
         });
-        return finalData;
-
+        return response;
     }
 }
