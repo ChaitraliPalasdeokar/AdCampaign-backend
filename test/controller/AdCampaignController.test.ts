@@ -8,6 +8,8 @@ describe("AdCampaign Controller", () => {
         jest.resetAllMocks();
     });
 
+    describe("Get Data",()=>{
+
     it("Should make a call to adcampaign service to get all data given query parameters are not passed", async () => {
         const mockRequest = {
         } as express.Request;
@@ -140,5 +142,41 @@ describe("AdCampaign Controller", () => {
 
         expect(mockResponse.json).toHaveBeenCalledWith(new Error('Generic Error'));
     });
+    });
+
+    describe("Get Metrics",()=>{
+        it("Should make a call to adcampaign service to get all metrics of data", async () => {
+            const mockRequest = {
+            } as express.Request;
+            const mockResponse: any = {
+                json: jest.fn(),
+                status: jest.fn(),
+            };
+            AdCampaignService.prototype.getAllData = jest.fn().mockReturnValue([{
+                "date": "2022-06-01",
+                "source": "affiliate_prospecting",
+                "attributed_conversions": "9.773536305012904",
+                "attributed_revenue": "1063.8644023804768",
+                "type": "incrementality",
+                "spends": "98.537499",
+                "partition_id": "932561105d21a54d3d1d2a941164ffec321cd76b",
+                "optimisation_target": "conversions"
+            }, {
+                "date": "2022-06-01",
+                "source": "affiliate_prospecting",
+                "attributed_conversions": "9.171867894663112",
+                "attributed_revenue": "998.371874002628",
+                "type": "incrementality",
+                "spends": "98.537499",
+                "partition_id": "932561105d21a54d3d1d2a941164ffec321cd76b",
+                "optimisation_target": "revenue"
+            }]);
+
+            new AdCampaignController().getMetrics(mockRequest,mockResponse);
+
+            expect(AdCampaignService.prototype.getAllData).toHaveBeenCalledTimes(1);
+        });
+
+    })
 
 });

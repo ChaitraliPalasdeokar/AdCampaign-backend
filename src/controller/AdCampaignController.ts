@@ -5,7 +5,7 @@ export default class AdCampaignController{
 
      getData(req: Request, res:Response){
          const service = new AdCampaignService();
-         const queryParamsPresent = req.query?Object.keys(req.query).length!==0:false;
+         const queryParamsPresent = req.query? Object.keys(req.query).length!==0: false;
          let response;
          try {
              if(queryParamsPresent){
@@ -25,4 +25,17 @@ export default class AdCampaignController{
     }
 
 
+    getMetrics(req: Request, res:Response) {
+        const service = new AdCampaignService();
+        try {
+           const response = service.getMetrics();
+            res.json(response);
+        } catch (error:unknown) {
+            console.log(error);
+            res.status(400);
+            res.json('Error');
+        }
+
+
+    }
 }
