@@ -6,6 +6,7 @@ describe("AdCampaign Service",()=>{
     afterEach(()=>{
         jest.resetAllMocks();
     })
+    describe("Get Data",()=>{
     it("should make a call to getData to read data from file and return data in format", () => {
         const data:AdCampaignModel[] =[
             new AdCampaignModel("2022-06-01", "affiliate_prospecting",
@@ -171,7 +172,65 @@ describe("AdCampaign Service",()=>{
             expect(e).toMatchObject(errorMessage);
         }
     });
+    })
 
+    describe("Get Metrics", () => {
+            it("should make a call to getData to read data from file and return data in format", () => {
+                const data:AdCampaignModel[] =[
+                    new AdCampaignModel("2022-06-01", "affiliate_prospecting",
+                        "9.773536305012904",
+                        "1063.8644023804768",
+                        "incrementality",
+                        "98.537499",
+                        "932561105d21a54d3d1d2a941164ffec321cd76b",
+                        "conversions"),
+                    new AdCampaignModel("2022-06-01",
+                        "affiliate_prospecting",
+                        "9.171867894663112",
+                        "998.371874002628",
+                        "incrementality",
+                        "98.537499",
+                        "932561105d21a54d3d1d2a941164ffec321cd76b",
+                        "revenue")
+                ];
+                AdCampaignService.prototype.getAllData = jest.fn().mockReturnValue(data);
 
+                new AdCampaignService().getMetrics();
+
+                expect(AdCampaignService.prototype.getAllData).toHaveBeenCalledTimes(1);
+            });
+
+        it("should return total data for given numeric fields", () => {
+            const data:AdCampaignModel[] =[
+                new AdCampaignModel("2022-06-01", "affiliate_prospecting",
+                    "9.773536305012904",
+                    "1063.8644023804768",
+                    "incrementality",
+                    "98.537499",
+                    "932561105d21a54d3d1d2a941164ffec321cd76b",
+                    "conversions"),
+                new AdCampaignModel("2022-06-01",
+                    "affiliate_prospecting",
+                    "9.171867894663112",
+                    "998.371874002628",
+                    "incrementality",
+                    "98.537499",
+                    "932561105d21a54d3d1d2a941164ffec321cd76b",
+                    "revenue")
+            ];
+            AdCampaignService.prototype.getAllData = jest.fn().mockReturnValue(data);
+            const expectedMetrics = {
+                "attributed_conversions": 18.95,
+                "attributed_revenue": 2062.24,
+                "spends": 197.07
+            };
+
+            const actualMetrics = new AdCampaignService().getMetrics();
+
+            expect(actualMetrics).toStrictEqual(expectedMetrics);
+
+        });
+
+    });
 
 });

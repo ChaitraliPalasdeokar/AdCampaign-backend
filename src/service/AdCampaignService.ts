@@ -43,4 +43,14 @@ export default class AdCampaignService{
         });
         return response;
     }
+
+    getMetrics() {
+        const utilFunctions = new UtilFunctions();
+        const data:AdCampaignModel[]= this.getAllData();
+        const numericFields = ["attributed_conversions","attributed_revenue","spends"]
+
+        let result = utilFunctions.totalDataFor(numericFields, data);
+        return result;
+    }
+
 }

@@ -4,6 +4,6 @@ import adCampaignRouter from './AdCampaignRoutes'
 export default class Routes {
 
     constructor(app: Application) {
-        app.use('/api/v1/data', adCampaignRouter);
+        app.use('/api/v1', adCampaignRouter);
     }
 }

@@ -1,5 +1,6 @@
 import AdCampaignModel from "../model/AdCampaignModel";
 
+type objectWithNumberValues = { [index: string]: number };
 export default class UtilFunctions {
 
 	groupDataBy(allData: { [index: string]: any }, property: string) {
@@ -48,4 +49,18 @@ export default class UtilFunctions {
 		});
 	}
 
+	totalDataFor(numericFields: string[], data: AdCampaignModel[]) {
+		let result: objectWithNumberValues = {};
+		numericFields.forEach((field) => {
+			const totalSum = data.map(obj => obj).reduce(
+				(sum: number, item: { [index: string]: any }) => {
+					return sum + item[field];
+				},
+				0
+			);
+			result[field] = Math.round(totalSum*100)/100;
+
+		})
+		return result;
+	}
 }
