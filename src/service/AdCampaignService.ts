@@ -32,7 +32,7 @@ export default class AdCampaignService{
              }
            }
            if(query=='aggregate'){
-               if(!queryParams.includes('groupby')){
+               if(!(queryParams.includes('groupby'))){
                    throw new Error('Invalid groupby parameter. Please specify a groupby field')
                }
                const aggregateParam = allQueryParams['aggregate']

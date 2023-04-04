@@ -4,8 +4,8 @@ export default class UtilFunctions {
 
 	groupDataBy(allData: { [index: string]: any }, property: string) {
 		return allData.reduce(
-			(acc: { [index: string]: any }, obj: AdCampaignModel) => {
-				const key = obj[property];
+			(acc: { [index: string]: any }, obj: object) => {
+				const key:any = (obj as any)[property];
 				if (!acc[key]) {
 					acc[key] = [];
 				}
@@ -40,9 +40,9 @@ export default class UtilFunctions {
 	filterFields(data: { [p: string]: any }, fieldsParam: any) {
 		const values: string[] = Array.isArray(fieldsParam) ? fieldsParam: [fieldsParam] || [ ];
 		return data.map((row:object) => {
-			const obj={};
-			values.forEach((field) => {
-				obj[field] = row[field];
+			const obj:any={};
+			values.forEach((field:string) => {
+				obj[field] = (row as any)[field] ;
 			});
 			return obj;
 		});

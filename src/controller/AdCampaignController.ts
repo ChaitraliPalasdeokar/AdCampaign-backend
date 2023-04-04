@@ -1,11 +1,11 @@
-import express from "express";
+import {Request,Response} from "express";
 import AdCampaignService from "../service/AdCampaignService";
 
 export default class AdCampaignController{
 
-     getData(req: express.Request, res: express.Response){
+     getData(req: Request, res:Response){
          const service = new AdCampaignService();
-         const queryParamsPresent = Object.keys(req.query).length!==0;
+         const queryParamsPresent = req.query?Object.keys(req.query).length!==0:false;
          let response;
          try {
              if(queryParamsPresent){
