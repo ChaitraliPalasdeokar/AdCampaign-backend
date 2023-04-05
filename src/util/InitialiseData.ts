@@ -1,4 +1,5 @@
 import fs from "fs";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const csvToJson = require('convert-csv-to-json');
 
 const csvFile = 'sphere-sample-data.csv';

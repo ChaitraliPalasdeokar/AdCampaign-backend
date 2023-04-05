@@ -1,7 +1,7 @@
 import data from '../../sphere-sample-data.json';
 import UtilFunctions from "../util/UtilFunctions";
 import AdCampaignModel from "../model/AdCampaignModel";
-
+import {metricFields, queryParameters} from "../util/constants"
 export default class AdCampaignService{
 
     getAllData():AdCampaignModel[] {
@@ -19,23 +19,23 @@ export default class AdCampaignService{
         const queryParams:string[]= Object.keys(allQueryParams);
         let response: { [index: string]: any }=data;
         queryParams.forEach((query)=>{
-            if(query=='fields'){
-                const fieldsParam = allQueryParams['fields']
+            if(query==queryParameters.FIELDS){
+                const fieldsParam = allQueryParams[queryParameters.FIELDS]
                 if(fieldsParam.length>0){
                     response = utilFunctions.filterFields(response,fieldsParam)
                 }
             }
-           if(query=='groupby'){
-               const groupParam = allQueryParams['groupby'];
+           if(query==queryParameters.GROUPBY){
+               const groupParam = allQueryParams[queryParameters.GROUPBY];
              if(groupParam.length>0){
                  response = utilFunctions.groupDataBy(response,groupParam);
              }
            }
-           if(query=='aggregate'){
-               if(!(queryParams.includes('groupby'))){
+           if(query==queryParameters.AGGREGATE){
+               if(!(queryParams.includes(queryParameters.GROUPBY))){
                    throw new Error('Invalid groupby parameter. Please specify a groupby field')
                }
-               const aggregateParam = allQueryParams['aggregate']
+               const aggregateParam = allQueryParams[queryParameters.AGGREGATE]
                if(aggregateParam.length>0){
                    response = utilFunctions.aggregateDataBy(response,aggregateParam);
                }
@@ -47,10 +47,8 @@ export default class AdCampaignService{
     getMetrics() {
         const utilFunctions = new UtilFunctions();
         const data:AdCampaignModel[]= this.getAllData();
-        const numericFields = ["attributed_conversions","attributed_revenue","spends"]
 
-        let result = utilFunctions.totalDataFor(numericFields, data);
-        return result;
+        return utilFunctions.totalDataFor(metricFields, data);
     }
 
 }

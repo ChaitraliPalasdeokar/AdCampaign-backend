@@ -50,7 +50,7 @@ export default class UtilFunctions {
 	}
 
 	totalDataFor(numericFields: string[], data: AdCampaignModel[]) {
-		let result: objectWithNumberValues = {};
+		const result: objectWithNumberValues = {};
 		numericFields.forEach((field) => {
 			const totalSum = data.map(obj => obj).reduce(
 				(sum: number, item: { [index: string]: any }) => {
