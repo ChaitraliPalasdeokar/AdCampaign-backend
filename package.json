@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint ./src --ext .ts",
     "build": "npx tsc",
-    "start": "node dist/index.js",
+    "start": "npm run csvToJson && node dist/index.js",
     "dev": "npm run csvToJson && concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "test": "jest --coverage",
     "csvToJson": "npx ts-node src/util/InitialiseData.ts"
